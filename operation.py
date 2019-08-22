@@ -31,6 +31,34 @@ def f_i(t, i, m, mutable=True):
     return t
 
 
+def e_i(t, i, m, mutable=True):
+    if not mutable:
+        t = t.clone()
+    o_lower, o_higher = a.Ordinary(i), a.Ordinary(i+1)
+    b_lower, b_higher = a.Barred(i+1), a.Barred(i)
+    pos, stack = None, 0
+    for y in range(len(t.shapeTranspose)):
+        for x in range(t.shapeTranspose[-y-1]):
+            if t.body[x][len(t.shapeTranspose)-y-1] == o_higher or t.body[x][len(t.shapeTranspose)-y-1] == b_higher:
+                if stack == 0:
+                    pos = [x, len(t.shapeTranspose)-y-1]
+                else:
+                    stack -= 1
+            elif t.body[x][len(t.shapeTranspose)-y-1] == o_lower or t.body[x][len(t.shapeTranspose)-y-1] == b_lower:
+                stack += 1
+    if pos is None:
+        return None
+    if i == m:
+        num = t.body[pos[0]][pos[1]].num
+        t.body[pos[0]][pos[1]] = a.Ordinary(num)
+        return t
+    if isinstance(t.body[pos[0]][pos[1]], a.Ordinary):
+        t.body[pos[0]][pos[1]].num -= 1
+    else:
+        t.body[pos[0]][pos[1]].num += 1
+    return t
+
+
 def get_crystal_graph(shape, m=None):
     if m is None:
         m = len(shape)
