@@ -83,3 +83,35 @@ def get_crystal_graph(shape, m=None):
                 e[i] = t
         index += 1
     return tableaux, fi_map, ei_map
+
+
+def get_tableaux_set(shape, m=None):
+    tableaux, fi_map, ei_map = get_crystal_graph(shape, m)
+    return tableaux
+
+
+def s_i(t, i, m=None, mutable=True):
+    if not mutable:
+        t = t.clone()
+    i_count = i_plus_one_count = 0
+    o_i, o_i_plus_one = a.Ordinary(i), a.Ordinary(i+1)
+    b_i, b_i_plus_one = a.Barred(i), a.Barred(i+1)
+    for x in range(len(t.body)):
+        for y in range(len(t.body[x])):
+            if t.body[x][y] == o_i:
+                i_count += 1
+            elif t.body[x][y] == o_i_plus_one:
+                i_plus_one_count += 1
+            elif t.body[x][y] == b_i:
+                i_count -= 1
+            elif t.body[x][y] == b_i_plus_one:
+                i_plus_one_count -= 1
+    k = i_count - i_plus_one_count
+    if k >= 0:
+        task = f_i
+    else:
+        task = e_i
+        k = -k
+    for _ in range(k):
+        task(t, i, m)
+    return t
