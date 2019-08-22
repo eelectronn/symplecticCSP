@@ -29,6 +29,9 @@ class Ordinary(Alphabet):
     def __str__(self):
         return str(self.num)
 
+    def clone(self):
+        return Ordinary(self.num)
+
     __repr__ = __str__
     # def __repr__(self):
     #     return 'Ordinary('+str(self.num)+')'
@@ -42,6 +45,9 @@ class Barred(Alphabet):
 
     def __str__(self):
         return u'\u0305' + str(self.num)
+
+    def clone(self):
+        return Barred(self.num)
 
     __repr__ = __str__
     # def __repr__(self):

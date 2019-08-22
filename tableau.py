@@ -61,10 +61,13 @@ class Tableau:
                 return {'bumped_element': temp}
 
     def clone(self):
-        body = []
+        body_copy = []
         for row in self.body:
-            body.append(row.copy())
-        return Tableau(body)
+            row_copy = []
+            for entry in row:
+                row_copy.append(entry.clone())
+            body_copy.append(row_copy)
+        return Tableau(body_copy)
 
     def __eq__(self, other):
         if len(self.body) != len(other.body):
@@ -79,3 +82,6 @@ class Tableau:
 
     def __ne__(self, other):
         return not self == other
+
+    def __hash__(self):
+        return hash(str(self))
