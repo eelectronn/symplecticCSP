@@ -117,7 +117,7 @@ def s_i(t, i, m=None, mutable=True):
     return t
 
 
-def action_c(t, m, mutable=True):
+def action_c(t, m=None, mutable=True):
     if not mutable:
         t = t.clone()
     for i in range(m):
@@ -125,11 +125,23 @@ def action_c(t, m, mutable=True):
     return t
 
 
-def order_of_tableau(t, m):
+def order_of_tableau(t, m=None):
     t_copy = t.clone()
-    action_c(t, m)
+    action_c(t_copy, m)
     order = 1
     while t != t_copy:
-        action_c(t, m)
+        action_c(t_copy, m)
         order += 1
     return order
+
+
+def order_of_set(shape, m=None):
+    tableaux = get_tableaux_set(shape, m)
+    order_freq = {}
+    for t in tableaux:
+        order = order_of_tableau(t, m)
+        if order in order_freq:
+            order_freq[order] += 1
+        else:
+            order_freq[order] = 1
+    return order_freq
