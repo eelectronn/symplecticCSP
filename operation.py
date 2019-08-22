@@ -115,3 +115,11 @@ def s_i(t, i, m=None, mutable=True):
     for _ in range(k):
         task(t, i, m)
     return t
+
+
+def action_c(t, m, mutable=True):
+    if not mutable:
+        t = t.clone()
+    for i in range(m):
+        s_i(t, m-i, m)
+    return t
