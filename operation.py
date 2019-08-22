@@ -123,3 +123,13 @@ def action_c(t, m, mutable=True):
     for i in range(m):
         s_i(t, m-i, m)
     return t
+
+
+def order_of_tableau(t, m):
+    t_copy = t.clone()
+    action_c(t, m)
+    order = 1
+    while t != t_copy:
+        action_c(t, m)
+        order += 1
+    return order
