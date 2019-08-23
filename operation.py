@@ -145,3 +145,29 @@ def order_of_set(shape, m=None):
         else:
             order_freq[order] = 1
     return order_freq
+
+
+def get_monomial(t, m):
+    monomial = [0 for _ in range(m)]
+    for i in range(len(t.body)):
+        for j in range(len(t.body[i])):
+            if isinstance(t.body[i][j], a.Ordinary):
+                monomial[t.body[i][j].num - 1] += 1
+            else:
+                monomial[t.body[i][j].num - 1] -= 1
+    power_of_q = 0
+    for i in range(m):
+        power_of_q += i*monomial[i]
+    return power_of_q
+
+
+def get_kn_schur_polynomial(shape, m=None):
+    tableaux = get_tableaux_set(shape, m)
+    polynomial = {}
+    for t in tableaux:
+        monomial = get_monomial(t, m)
+        if monomial in polynomial:
+            polynomial[monomial] += 1
+        else:
+            polynomial[monomial] = 1
+    return polynomial
