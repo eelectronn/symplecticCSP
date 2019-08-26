@@ -140,6 +140,8 @@ def order_of_set(shape, m=None):
     order_freq = {}
     for t in tableaux:
         order = order_of_tableau(t, m)
+        if order == 1:
+            print(t)
         if order in order_freq:
             order_freq[order] += 1
         else:
