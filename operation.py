@@ -1,6 +1,6 @@
 import alphabet as a
 import tableau as tab
-import math
+import sympy as sp
 
 
 def f_i(t, i, m, mutable=True):
@@ -164,25 +164,24 @@ def get_monomial(t, m):
 
 def get_kn_schur_polynomial(shape, m=None):
     tableaux = get_tableaux_set(shape, m)
-    polynomial = {}
+    polynomial = 0
+    q = sp.symbols('q')
     for t in tableaux:
         monomial = get_monomial(t, m)
-        if monomial in polynomial:
-            polynomial[monomial] += 1
-        else:
-            polynomial[monomial] = 1
-    return polynomial
+        polynomial = polynomial + q**monomial
+    return polynomial, q
 
 
 def nth_root_of_unity(n):
-    real = math.cos(2*math.pi/n)
-    img = math.sin(2*math.pi/n)
-    return complex(real, img)
+    return sp.exp(2*sp.pi*sp.I/n).expand(complex=True)
 
 
-def evaluate(poly, root):
-    i = root
-    s = 0 + 0j
-    for k in poly:
-        s += poly[k] * (pow(i, k))
-    print(s)
+def k_of_shape(shape):
+    k = 0
+    for i in range(len(shape)):
+        k += i*shape[i]
+    return k
+
+
+def evaluate(poly, q, inp):
+    return poly.subs(q, inp).expand(complex=True)

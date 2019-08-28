@@ -1,36 +1,29 @@
 import operation as o
-import math
 
-shape = [2, 2]
-m = 2
-# tableaux = o.get_tableaux_set(shape, m)
-# for t in tableaux:
-#     print(t)
-# set_order = o.order_of_set(shape, m)
-# print(set_order)
-#
-# polynomial = o.get_kn_schur_polynomial(shape, m)
-# print(polynomial)
-#
-#
-# def evaluate(poly, root):
-#     i = root
-#     sum = 0 + 0j
-#     for k in poly:
-#         sum += poly[k] * (pow(i, k))
-#     print(sum)
-#
-#
-# def nth_root_of_unity(n):
-#     real = math.cos(2*2*math.pi/n)
-#     img = math.sin(2*2*math.pi/n)
-#     return complex(real, img)
-#
-#
-# print(evaluate(polynomial, nth_root_of_unity(2*m)))
-# print(len(o.get_tableaux_set([3, 3], 3)))
-# # print(nth_root_of_unity(6))
+sh_and_m = [
+    [[2, 1], 2],
+    [[2, 1], 3],
+    [[2, 2], 2],
+    [[2, 2], 3],
+    [[3, 2], 2],
+    [[3, 2], 3],
+    [[3, 3], 2],
+    [[3, 3], 3],
+    [[3, 2, 1], 3],
+    [[3, 2, 2], 3],
+    [[3, 3, 1], 3],
+    [[3, 3, 2], 3],
+    [[3, 3, 3], 3],
+]
 
-tableaux = o.get_tableaux_set(shape, m)
-for t in tableaux:
-    print(t)
+for sm in sh_and_m:
+    print('shape: ' + str(sm[0]))
+    print('m: ' + str(sm[1]))
+    print('k(shape) = ' + str(o.k_of_shape(sm[0])))
+    polynomial, q = o.get_kn_schur_polynomial(sm[0], sm[1])
+    print('order and frequency =  ' + str(o.order_of_set(sm[0], sm[1])))
+    print('p(q) = ' + str(polynomial))
+    evaluation = o.evaluate(polynomial, q, o.nth_root_of_unity(2*sm[1]))
+    print('p(2m^th root) = ' + str(evaluation))
+    print()
+
