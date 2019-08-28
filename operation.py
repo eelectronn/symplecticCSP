@@ -1,5 +1,6 @@
 import alphabet as a
 import tableau as tab
+import math
 
 
 def f_i(t, i, m, mutable=True):
@@ -140,8 +141,6 @@ def order_of_set(shape, m=None):
     order_freq = {}
     for t in tableaux:
         order = order_of_tableau(t, m)
-        if order == 1:
-            print(t)
         if order in order_freq:
             order_freq[order] += 1
         else:
@@ -173,3 +172,17 @@ def get_kn_schur_polynomial(shape, m=None):
         else:
             polynomial[monomial] = 1
     return polynomial
+
+
+def nth_root_of_unity(n):
+    real = math.cos(2*math.pi/n)
+    img = math.sin(2*math.pi/n)
+    return complex(real, img)
+
+
+def evaluate(poly, root):
+    i = root
+    s = 0 + 0j
+    for k in poly:
+        s += poly[k] * (pow(i, k))
+    print(s)
