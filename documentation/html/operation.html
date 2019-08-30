@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>operation module &#8212; Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tableau module" href="tableau.html" />
+    <link rel="prev" title="alphabet module" href="alphabet.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tableau.html" title="tableau module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="alphabet.html" title="alphabet module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-operation">
+<span id="operation-module"></span><h1>operation module<a class="headerlink" href="#module-operation" title="Permalink to this headline">¶</a></h1>
+<p>This module contains all the elementary function to apply action c on a kn tableau.</p>
+<dl class="function">
+<dt id="operation.action_c">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">action_c</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">m=None</em>, <em class="sig-param">mutable=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#action_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.action_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to apply action c on tableau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – tableau.</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+<li><p><strong>mutable</strong> – optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tableau obtained after applying c on t.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.e_i">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">e_i</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">i</em>, <em class="sig-param">m</em>, <em class="sig-param">mutable=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#e_i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.e_i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to apply e_i on tableau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – tableau.</p></li>
+<li><p><strong>i</strong> – i as in e_i</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+<li><p><strong>mutable</strong> – optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tableau after applying e_i</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.evaluate">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">poly</em>, <em class="sig-param">q</em>, <em class="sig-param">inp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to evaluate polynomial at a particular value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>poly</strong> – polynomial.</p></li>
+<li><p><strong>q</strong> – variable in polynomial.</p></li>
+<li><p><strong>inp</strong> – input value where we need to evaluate the polynomial.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>value obtained after evaluation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.f_i">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">f_i</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">i</em>, <em class="sig-param">m</em>, <em class="sig-param">mutable=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#f_i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.f_i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to apply f_i on tableau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – tableau.</p></li>
+<li><p><strong>i</strong> – i as in f_i</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+<li><p><strong>mutable</strong> – optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tableau after applying f_i</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.get_crystal_graph">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">get_crystal_graph</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">m=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#get_crystal_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.get_crystal_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to create crystal graph data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> – shape of tableaux in graph</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of all k-n tableaux for given shape and value of m, an f_i dictionary with all the kn tableaux as keys with a list as value, where (i-1)st index in list refer to tableau obtained by applying f_i to the key tableau. A similar e_i tableaux dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.get_kn_schur_polynomial">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">get_kn_schur_polynomial</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">m=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#get_kn_schur_polynomial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.get_kn_schur_polynomial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the kn-Schur polynomial in q for a given shape and value of m.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> – shape of tableaux in set.</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Schur polynomial in variable q. and variable q.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.get_power_of_q">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">get_power_of_q</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">m</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#get_power_of_q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.get_power_of_q" title="Permalink to this definition">¶</a></dt>
+<dd><p>Power of q in the monomial that corresponds to tableau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – tableau.</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>power of q in the monomial that corresponds to tableau t.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.get_tableaux_set">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">get_tableaux_set</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">m=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#get_tableaux_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.get_tableaux_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to obtain all the kn tableaux of given shape and value of m.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> – shape of tableaux.</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of all the tableaux of given shape and value of m.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.k_of_shape">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">k_of_shape</code><span class="sig-paren">(</span><em class="sig-param">shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#k_of_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.k_of_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>statistic of shape as defined in OH’s and PARK’s paper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>shape</strong> – shape.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>statistic of shape.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.nth_root_of_unity">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">nth_root_of_unity</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#nth_root_of_unity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.nth_root_of_unity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute n-th root of unity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n</strong> – n as in n-th root of unity.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>n-th root of unity in form of sympy complex number expression.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.order_of_set">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">order_of_set</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">m=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#order_of_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.order_of_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute order of a set of kn tableaux of a given shape and value of m.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> – shape of tableau.</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary with key as order and frequency of that order in set as value of that key.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.order_of_tableau">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">order_of_tableau</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">m=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#order_of_tableau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.order_of_tableau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the order of action c.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – tableau.</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>order of tableau t under action c.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="operation.s_i">
+<code class="sig-prename descclassname">operation.</code><code class="sig-name descname">s_i</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">i</em>, <em class="sig-param">m=None</em>, <em class="sig-param">mutable=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/operation.html#s_i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#operation.s_i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to apply s_i to the tableau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – tableau.</p></li>
+<li><p><strong>i</strong> – i as in s_i</p></li>
+<li><p><strong>m</strong> – m such that allowed entries in t are 1 to m and 1-bar to m-bar</p></li>
+<li><p><strong>mutable</strong> – optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tableau obtained after applying s_i on t.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="alphabet.html"
+                        title="previous chapter">alphabet module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tableau.html"
+                        title="next chapter">tableau module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/operation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tableau.html" title="tableau module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="alphabet.html" title="alphabet module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Harsh Patel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

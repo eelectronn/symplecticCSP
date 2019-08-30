@@ -1,9 +1,21 @@
+"""
+This module contains all the elementary function to apply action c on a kn tableau.
+"""
 import alphabet as a
 import tableau as tab
 import sympy as sp
 
 
 def f_i(t, i, m, mutable=True):
+    """
+    Function to apply f_i on tableau.
+
+    :param t: tableau.
+    :param i: i as in f_i
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.
+    :return: tableau after applying f_i
+    """
     if not mutable:
         t = t.clone()
     o_lower, o_higher = a.Ordinary(i), a.Ordinary(i + 1)
@@ -33,6 +45,15 @@ def f_i(t, i, m, mutable=True):
 
 
 def e_i(t, i, m, mutable=True):
+    """
+    Function to apply e_i on tableau.
+
+    :param t: tableau.
+    :param i: i as in e_i
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.
+    :return: tableau after applying e_i
+    """
     if not mutable:
         t = t.clone()
     o_lower, o_higher = a.Ordinary(i), a.Ordinary(i+1)
@@ -61,6 +82,13 @@ def e_i(t, i, m, mutable=True):
 
 
 def get_crystal_graph(shape, m=None):
+    """
+    Function to create crystal graph data.
+
+    :param shape: shape of tableaux in graph
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :return: a list of all k-n tableaux for given shape and value of m, an f_i dictionary with all the kn tableaux as keys with a list as value, where (i-1)st index in list refer to tableau obtained by applying f_i to the key tableau. A similar e_i tableaux dictionary.
+    """
     if m is None:
         m = len(shape)
     starting_tableau = tab.Tableau([[a.Ordinary(i+1) for _ in range(shape[i])] for i in range(len(shape))])
@@ -87,11 +115,27 @@ def get_crystal_graph(shape, m=None):
 
 
 def get_tableaux_set(shape, m=None):
+    """
+    Function to obtain all the kn tableaux of given shape and value of m.
+
+    :param shape: shape of tableaux.
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :return: list of all the tableaux of given shape and value of m.
+    """
     tableaux, fi_map, ei_map = get_crystal_graph(shape, m)
     return tableaux
 
 
 def s_i(t, i, m=None, mutable=True):
+    """
+    Function to apply s_i to the tableau.
+
+    :param t: tableau.
+    :param i: i as in s_i
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.
+    :return: tableau obtained after applying s_i on t.
+    """
     if not mutable:
         t = t.clone()
     i_count = i_plus_one_count = 0
@@ -119,6 +163,14 @@ def s_i(t, i, m=None, mutable=True):
 
 
 def action_c(t, m=None, mutable=True):
+    """
+    Function to apply action c on tableau.
+
+    :param t: tableau.
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.
+    :return: tableau obtained after applying c on t.
+    """
     if not mutable:
         t = t.clone()
     for i in range(m):
@@ -127,6 +179,13 @@ def action_c(t, m=None, mutable=True):
 
 
 def order_of_tableau(t, m=None):
+    """
+    Function to compute the order of action c.
+
+    :param t: tableau.
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :return: order of tableau t under action c.
+    """
     t_copy = t.clone()
     action_c(t_copy, m)
     order = 1
@@ -137,6 +196,13 @@ def order_of_tableau(t, m=None):
 
 
 def order_of_set(shape, m=None):
+    """
+    Function to compute order of a set of kn tableaux of a given shape and value of m.
+
+    :param shape: shape of tableau.
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :return: dictionary with key as order and frequency of that order in set as value of that key.
+    """
     tableaux = get_tableaux_set(shape, m)
     order_freq = {}
     for t in tableaux:
@@ -148,7 +214,14 @@ def order_of_set(shape, m=None):
     return order_freq
 
 
-def get_monomial(t, m):
+def get_power_of_q(t, m):
+    """
+    Power of q in the monomial that corresponds to tableau.
+
+    :param t: tableau.
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :return: power of q in the monomial that corresponds to tableau t.
+    """
     monomial = [0 for _ in range(m)]
     for i in range(len(t.body)):
         for j in range(len(t.body[i])):
@@ -163,20 +236,39 @@ def get_monomial(t, m):
 
 
 def get_kn_schur_polynomial(shape, m=None):
+    """
+    Function to compute the kn-Schur polynomial in q for a given shape and value of m.
+
+    :param shape: shape of tableaux in set.
+    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar
+    :return: Schur polynomial in variable q. and variable q.
+    """
     tableaux = get_tableaux_set(shape, m)
     polynomial = 0
     q = sp.symbols('q')
     for t in tableaux:
-        monomial = get_monomial(t, m)
+        monomial = get_power_of_q(t, m)
         polynomial = polynomial + q**monomial
     return polynomial, q
 
 
 def nth_root_of_unity(n):
+    """
+    Function to compute n-th root of unity.
+
+    :param n: n as in n-th root of unity.
+    :return: n-th root of unity in form of sympy complex number expression.
+    """
     return sp.exp(2*sp.pi*sp.I/n).expand(complex=True)
 
 
 def k_of_shape(shape):
+    """
+    statistic of shape as defined in OH's and PARK's paper.
+
+    :param shape: shape.
+    :return: statistic of shape.
+    """
     k = 0
     for i in range(len(shape)):
         k += i*shape[i]
@@ -184,4 +276,12 @@ def k_of_shape(shape):
 
 
 def evaluate(poly, q, inp):
+    """
+    Function to evaluate polynomial at a particular value.
+
+    :param poly: polynomial.
+    :param q: variable in polynomial.
+    :param inp: input value where we need to evaluate the polynomial.
+    :return: value obtained after evaluation.
+    """
     return poly.subs(q, inp).expand(complex=True)

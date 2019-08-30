@@ -1,0 +1,7 @@
+sympy module
+============
+
+.. automodule:: sympy
+   :members:
+   :undoc-members:
+   :show-inheritance:

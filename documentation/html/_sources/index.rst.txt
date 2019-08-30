@@ -1,0 +1,23 @@
+.. Action 'c' and Kashiwara-Nakashima tableaux documentation master file, created by
+   sphinx-quickstart on Fri Aug 30 02:04:01 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Action 'c' and Kashiwara-Nakashima tableaux's documentation!
+=======================================================================
+
+.. toctree::
+   :maxdepth: 4
+
+   alphabet
+   operation
+   tableau
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

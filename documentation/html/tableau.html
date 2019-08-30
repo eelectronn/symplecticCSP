@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>tableau module &#8212; Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="operation module" href="operation.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="operation.html" title="operation module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-tableau">
+<span id="tableau-module"></span><h1>tableau module<a class="headerlink" href="#module-tableau" title="Permalink to this headline">¶</a></h1>
+<p>This module contains definition of Tableau class.</p>
+<dl class="class">
+<dt id="tableau.Tableau">
+<em class="property">class </em><code class="sig-prename descclassname">tableau.</code><code class="sig-name descname">Tableau</code><span class="sig-paren">(</span><em class="sig-param">body</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class defines a young tableau and provide functions to operate on it.</p>
+<dl class="method">
+<dt id="tableau.Tableau.__eq__">
+<code class="sig-name descname">__eq__</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.__eq__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to check if two Tableau object are same in the sense that they have same entries and same location for all location of boxes, using ==</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> – Tableau object with which invoking Tableau object is being compared.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if both Tableau object are same. False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">body</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialization function for Tableau object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>body</strong> – body of tableau.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.__ne__">
+<code class="sig-name descname">__ne__</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.__ne__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.__ne__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to check if two Tableau object are not same.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> – <dl class="field-list simple">
+<dt class="field-odd">param other</dt>
+<dd class="field-odd"><p>Tableau object with which invoking Tableau object is being compared.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>False if both Tableau object are same. True otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.__str__">
+<code class="sig-name descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get string representation of the Tableau object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>string representation of the Tableau object.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.add_new_box">
+<code class="sig-name descname">add_new_box</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.add_new_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.add_new_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add a new box at the end of a row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> – row index.</p></li>
+<li><p><strong>element</strong> – element to be added in new box.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.clone">
+<code class="sig-name descname">clone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to creat a copy of the invoking Tableau object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>copy of invoking tableau object.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#tableau.Tableau" title="tableau.Tableau">Tableau</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.del_row_lastbox">
+<code class="sig-name descname">del_row_lastbox</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.del_row_lastbox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.del_row_lastbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to delete the last box in the row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> – row index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tableau.Tableau.get_shape_transpose">
+<em class="property">static </em><code class="sig-name descname">get_shape_transpose</code><span class="sig-paren">(</span><em class="sig-param">shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tableau.html#Tableau.get_shape_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tableau.Tableau.get_shape_transpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the transpose of a given shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>shape</strong> – shape for which we need to calculate transpose.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list representing transpose shape.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="operation.html"
+                        title="previous chapter">operation module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tableau.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="operation.html" title="operation module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Harsh Patel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

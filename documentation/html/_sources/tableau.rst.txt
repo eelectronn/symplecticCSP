@@ -1,0 +1,9 @@
+tableau module
+==============
+
+.. automodule:: tableau
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members:
+   :exclude-members: __dict__, __hash__, __weakref__, __module__, __repr__

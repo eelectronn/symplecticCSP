@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>operation &#8212; Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for operation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains all the elementary function to apply action c on a kn tableau.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">alphabet</span> <span class="k">as</span> <span class="nn">a</span>
+<span class="kn">import</span> <span class="nn">tableau</span> <span class="k">as</span> <span class="nn">tab</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+
+
+<div class="viewcode-block" id="f_i"><a class="viewcode-back" href="../operation.html#operation.f_i">[docs]</a><span class="k">def</span> <span class="nf">f_i</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to apply f_i on tableau.</span>
+
+<span class="sd">    :param t: tableau.</span>
+<span class="sd">    :param i: i as in f_i</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</span>
+<span class="sd">    :return: tableau after applying f_i</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mutable</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">o_lower</span><span class="p">,</span> <span class="n">o_higher</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">b_lower</span><span class="p">,</span> <span class="n">b_higher</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">pos</span><span class="p">,</span> <span class="n">stack</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)):</span>
+        <span class="n">col_len</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col_len</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">col_len</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">o_lower</span> <span class="ow">or</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">col_len</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">b_lower</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stack</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_len</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stack</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">col_len</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">o_higher</span> <span class="ow">or</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">col_len</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">b_higher</span><span class="p">:</span>
+                <span class="n">stack</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">num</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">t</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">):</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="e_i"><a class="viewcode-back" href="../operation.html#operation.e_i">[docs]</a><span class="k">def</span> <span class="nf">e_i</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to apply e_i on tableau.</span>
+
+<span class="sd">    :param t: tableau.</span>
+<span class="sd">    :param i: i as in e_i</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</span>
+<span class="sd">    :return: tableau after applying e_i</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mutable</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">o_lower</span><span class="p">,</span> <span class="n">o_higher</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">b_lower</span><span class="p">,</span> <span class="n">b_higher</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">pos</span><span class="p">,</span> <span class="n">stack</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">[</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">o_higher</span> <span class="ow">or</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">b_higher</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stack</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stack</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">o_lower</span> <span class="ow">or</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shapeTranspose</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">b_lower</span><span class="p">:</span>
+                <span class="n">stack</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">num</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">t</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">):</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="get_crystal_graph"><a class="viewcode-back" href="../operation.html#operation.get_crystal_graph">[docs]</a><span class="k">def</span> <span class="nf">get_crystal_graph</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to create crystal graph data.</span>
+
+<span class="sd">    :param shape: shape of tableaux in graph</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :return: a list of all k-n tableaux for given shape and value of m, an f_i dictionary with all the kn tableaux as keys with a list as value, where (i-1)st index in list refer to tableau obtained by applying f_i to the key tableau. A similar e_i tableaux dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">starting_tableau</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">Tableau</span><span class="p">([[</span><span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))])</span>
+    <span class="n">tableaux</span> <span class="o">=</span> <span class="p">[</span><span class="n">starting_tableau</span><span class="p">]</span>
+    <span class="n">fi_map</span><span class="p">,</span> <span class="n">ei_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(),</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">ei_map</span><span class="p">[</span><span class="n">starting_tableau</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tableaux</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">tableaux</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">fi_map</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">f_of_t</span> <span class="o">=</span> <span class="n">f_i</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">f_of_t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">f_of_t</span> <span class="ow">in</span> <span class="n">ei_map</span><span class="p">:</span>
+                    <span class="n">e</span> <span class="o">=</span> <span class="n">ei_map</span><span class="p">[</span><span class="n">f_of_t</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">e</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+                    <span class="n">ei_map</span><span class="p">[</span><span class="n">f_of_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+                    <span class="n">tableaux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_of_t</span><span class="p">)</span>
+                <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_of_t</span>
+                <span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tableaux</span><span class="p">,</span> <span class="n">fi_map</span><span class="p">,</span> <span class="n">ei_map</span></div>
+
+
+<div class="viewcode-block" id="get_tableaux_set"><a class="viewcode-back" href="../operation.html#operation.get_tableaux_set">[docs]</a><span class="k">def</span> <span class="nf">get_tableaux_set</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to obtain all the kn tableaux of given shape and value of m.</span>
+
+<span class="sd">    :param shape: shape of tableaux.</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :return: list of all the tableaux of given shape and value of m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tableaux</span><span class="p">,</span> <span class="n">fi_map</span><span class="p">,</span> <span class="n">ei_map</span> <span class="o">=</span> <span class="n">get_crystal_graph</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tableaux</span></div>
+
+
+<div class="viewcode-block" id="s_i"><a class="viewcode-back" href="../operation.html#operation.s_i">[docs]</a><span class="k">def</span> <span class="nf">s_i</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to apply s_i to the tableau.</span>
+
+<span class="sd">    :param t: tableau.</span>
+<span class="sd">    :param i: i as in s_i</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</span>
+<span class="sd">    :return: tableau obtained after applying s_i on t.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mutable</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">i_count</span> <span class="o">=</span> <span class="n">i_plus_one_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">o_i</span><span class="p">,</span> <span class="n">o_i_plus_one</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">b_i</span><span class="p">,</span> <span class="n">b_i_plus_one</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">Barred</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">o_i</span><span class="p">:</span>
+                <span class="n">i_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">o_i_plus_one</span><span class="p">:</span>
+                <span class="n">i_plus_one_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">b_i</span><span class="p">:</span>
+                <span class="n">i_count</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">b_i_plus_one</span><span class="p">:</span>
+                <span class="n">i_plus_one_count</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">i_count</span> <span class="o">-</span> <span class="n">i_plus_one_count</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">f_i</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">e_i</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="n">k</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">task</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="action_c"><a class="viewcode-back" href="../operation.html#operation.action_c">[docs]</a><span class="k">def</span> <span class="nf">action_c</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to apply action c on tableau.</span>
+
+<span class="sd">    :param t: tableau.</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :param mutable: optional. Default set to True, where it directly make changes to the tableau t. If passed in as False, it creates a copy of t and operates on that copy, leaving t unaffected.</span>
+<span class="sd">    :return: tableau obtained after applying c on t.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mutable</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">s_i</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="order_of_tableau"><a class="viewcode-back" href="../operation.html#operation.order_of_tableau">[docs]</a><span class="k">def</span> <span class="nf">order_of_tableau</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute the order of action c.</span>
+
+<span class="sd">    :param t: tableau.</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :return: order of tableau t under action c.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t_copy</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">action_c</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">t</span> <span class="o">!=</span> <span class="n">t_copy</span><span class="p">:</span>
+        <span class="n">action_c</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="n">order</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">order</span></div>
+
+
+<div class="viewcode-block" id="order_of_set"><a class="viewcode-back" href="../operation.html#operation.order_of_set">[docs]</a><span class="k">def</span> <span class="nf">order_of_set</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute order of a set of kn tableaux of a given shape and value of m.</span>
+
+<span class="sd">    :param shape: shape of tableau.</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :return: dictionary with key as order and frequency of that order in set as value of that key.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tableaux</span> <span class="o">=</span> <span class="n">get_tableaux_set</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">order_freq</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tableaux</span><span class="p">:</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">order_of_tableau</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">order_freq</span><span class="p">:</span>
+            <span class="n">order_freq</span><span class="p">[</span><span class="n">order</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">order_freq</span><span class="p">[</span><span class="n">order</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">order_freq</span></div>
+
+
+<div class="viewcode-block" id="get_power_of_q"><a class="viewcode-back" href="../operation.html#operation.get_power_of_q">[docs]</a><span class="k">def</span> <span class="nf">get_power_of_q</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Power of q in the monomial that corresponds to tableau.</span>
+
+<span class="sd">    :param t: tableau.</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :return: power of q in the monomial that corresponds to tableau t.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">monomial</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">a</span><span class="o">.</span><span class="n">Ordinary</span><span class="p">):</span>
+                <span class="n">monomial</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">monomial</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">power_of_q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">power_of_q</span> <span class="o">+=</span> <span class="n">i</span><span class="o">*</span><span class="n">monomial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">power_of_q</span></div>
+
+
+<div class="viewcode-block" id="get_kn_schur_polynomial"><a class="viewcode-back" href="../operation.html#operation.get_kn_schur_polynomial">[docs]</a><span class="k">def</span> <span class="nf">get_kn_schur_polynomial</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute the kn-Schur polynomial in q for a given shape and value of m.</span>
+
+<span class="sd">    :param shape: shape of tableaux in set.</span>
+<span class="sd">    :param m: m such that allowed entries in t are 1 to m and 1-bar to m-bar</span>
+<span class="sd">    :return: Schur polynomial in variable q. and variable q.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tableaux</span> <span class="o">=</span> <span class="n">get_tableaux_set</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">polynomial</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tableaux</span><span class="p">:</span>
+        <span class="n">monomial</span> <span class="o">=</span> <span class="n">get_power_of_q</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="n">polynomial</span> <span class="o">=</span> <span class="n">polynomial</span> <span class="o">+</span> <span class="n">q</span><span class="o">**</span><span class="n">monomial</span>
+    <span class="k">return</span> <span class="n">polynomial</span><span class="p">,</span> <span class="n">q</span></div>
+
+
+<div class="viewcode-block" id="nth_root_of_unity"><a class="viewcode-back" href="../operation.html#operation.nth_root_of_unity">[docs]</a><span class="k">def</span> <span class="nf">nth_root_of_unity</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute n-th root of unity.</span>
+
+<span class="sd">    :param n: n as in n-th root of unity.</span>
+<span class="sd">    :return: n-th root of unity in form of sympy complex number expression.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sp</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sp</span><span class="o">.</span><span class="n">I</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="k_of_shape"><a class="viewcode-back" href="../operation.html#operation.k_of_shape">[docs]</a><span class="k">def</span> <span class="nf">k_of_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    statistic of shape as defined in OH&#39;s and PARK&#39;s paper.</span>
+
+<span class="sd">    :param shape: shape.</span>
+<span class="sd">    :return: statistic of shape.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)):</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="n">i</span><span class="o">*</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">k</span></div>
+
+
+<div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../operation.html#operation.evaluate">[docs]</a><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to evaluate polynomial at a particular value.</span>
+
+<span class="sd">    :param poly: polynomial.</span>
+<span class="sd">    :param q: variable in polynomial.</span>
+<span class="sd">    :param inp: input value where we need to evaluate the polynomial.</span>
+<span class="sd">    :return: value obtained after evaluation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">poly</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Action &#39;c&#39; and Kashiwara-Nakashima tableaux 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Harsh Patel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>
